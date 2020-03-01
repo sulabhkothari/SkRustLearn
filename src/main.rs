@@ -556,3 +556,4 @@ fn enums() {
 fn main() {
     enums();
 }
+
