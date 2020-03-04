@@ -1,0 +1,17 @@
+[package]
+name = "generictypes_traits_lifetimes2"
+version = "0.1.0"
+authors = ["Sulabh Kothari <Sulabh.Kothari@external.mckinsey.com>"]
+edition = "2018"
+
+[lib]
+name = "aggregator"
+path = "src/lib.rs"
+
+[[bin]]
+name = "mybin"
+path = "src/bin.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
