@@ -3,16 +3,22 @@ use std::process;
 use minigrep::Config;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
 
-    let config = Config::new(&args).unwrap_or_else(|err| {
+    let config = Config::new(env::args()).unwrap_or_else(|err| {
         eprintln!("Problem parsing arguments: {}", err);
+        process::exit(1);
+    });
+
+    //let args: Vec<String> = env::args().collect();
+
+    //let config = Config::new(&args).unwrap_or_else(|err| {
+    //    eprintln!("Problem parsing arguments: {}", err);
 
         // The process::exit function will stop the program immediately and return the number that
         // was passed as the exit status code. This is similar to the panic!-based handling we used
         // in Listing 12-8, but we no longer get all the extra output
-        process::exit(1);
-    });
+        // process::exit(1);
+    //});
 
     println!("Searching for {}", config.query);
     println!("In file {}", config.filename);

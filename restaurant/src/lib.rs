@@ -154,3 +154,18 @@ pub fn eat_at_restaurant5() {
 // use std::collections::*;
 // Be careful when using the glob operator! Glob can make it harder to tell what names are in scope
 // and where a name used in your program was defined.
+
+
+/// Adds one to the number given.
+///
+/// # Examples
+///
+/// ```
+/// let arg = 5;
+/// let answer = restaurant::add_one(arg);
+///
+/// assert_eq!(6, answer);
+/// ```
+pub fn add_one(x: i32) -> i32 {
+    x + 1
+}
