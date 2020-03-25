@@ -15,8 +15,13 @@
       <sourceFolder url="file://$MODULE_DIR$/generictypes_traits_lifetimes/traitexamples/examples" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/generictypes_traits_lifetimes/traitexamples/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/generictypes_traits_lifetimes/traitexamples/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/smart_pointers/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/smart_pointers/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/smart_pointers/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/smart_pointers/benches" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/generictypes_traits_lifetimes/traitexamples/target" />
       <excludeFolder url="file://$MODULE_DIR$/restaurant/src/de/target" />
+      <excludeFolder url="file://$MODULE_DIR$/src/smart_pointers/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

@@ -553,6 +553,10 @@ fn enums() {
     println!("Number of non quarter coins: {}", count);
 }
 
+fn smart_pointers23(){
+use mymods::smart_pointers::test_smart_pointers;
+    test_smart_pointers();
+}
 fn main() {
-    enums();
+    mymods::smart_pointers::smart_pointers_main();
 }

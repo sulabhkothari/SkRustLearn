@@ -47,9 +47,9 @@ fn main() {
 // common to many binary projects. As a result, the Rust community has developed a process to use as
 // a guideline for splitting the separate concerns of a binary program when main starts getting large.
 // The process has the following steps:
-//    1. Split your program into a main.rs and a lib.rs and move your program’s logic to lib.rs.
-//    2. As long as your command line parsing logic is small, it can remain in main.rs.
-//    3. When the command line parsing logic starts getting complicated, extract it from main.rs and move it to lib.rs.
+//    1. Split your program into a bin.rs and a lib.rs and move your program’s logic to lib.rs.
+//    2. As long as your command line parsing logic is small, it can remain in bin.rs.
+//    3. When the command line parsing logic starts getting complicated, extract it from bin.rs and move it to lib.rs.
 //
 //The responsibilities that remain in the main function after this process should be limited to the following:
 //    1. Calling the command line parsing logic with the argument values
@@ -57,10 +57,10 @@ fn main() {
 //    3. Calling a run function in lib.rs
 //    4. Handling the error if run returns an error
 //
-//This pattern is about separating concerns: main.rs handles running the program, and lib.rs handles
+//This pattern is about separating concerns: bin.rs handles running the program, and lib.rs handles
 // all the logic of the task at hand. Because you can’t test the main function directly, this structure
 // lets you test all of your program’s logic by moving it into functions in lib.rs. The only code that
-// remains in main.rs will be small enough to verify its correctness by reading it.
+// remains in bin.rs will be small enough to verify its correctness by reading it.
 
 // Writing Error Messages to Standard Error Instead of Standard Output:
 // Most terminals provide two kinds of output: standard output (stdout) for general information and
