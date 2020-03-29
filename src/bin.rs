@@ -3,6 +3,10 @@ extern crate rand;
 use std::io;
 use std::cmp::Ordering;
 use rand::Rng;
+use mymods::fearless_concurrency::concurrent_main;
+use mymods::object_oriented::object_oriented_main;
+use mymods::pattern_matching::pattern_matching_main;
+use mymods::advanced_features::advanced_features_main;
 
 
 fn guessing_game() {
@@ -553,10 +557,14 @@ fn enums() {
     println!("Number of non quarter coins: {}", count);
 }
 
-fn smart_pointers23(){
-use mymods::smart_pointers::test_smart_pointers;
+fn smart_pointers23() {
+    use mymods::smart_pointers::test_smart_pointers;
     test_smart_pointers();
 }
+
 fn main() {
-    mymods::smart_pointers::smart_pointers_main();
+    concurrent_main();
+    object_oriented_main();
+    pattern_matching_main();
+    advanced_features_main();
 }
