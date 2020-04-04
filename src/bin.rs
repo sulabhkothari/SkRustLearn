@@ -1,13 +1,13 @@
 extern crate rand;
 
-use std::io;
-use std::cmp::Ordering;
-use rand::Rng;
+use mymods::advanced_features::advanced_features_main;
 use mymods::fearless_concurrency::concurrent_main;
+use mymods::multithreaded_web_server::webserver_main;
 use mymods::object_oriented::object_oriented_main;
 use mymods::pattern_matching::pattern_matching_main;
-use mymods::advanced_features::advanced_features_main;
-
+use rand::Rng;
+use std::cmp::Ordering;
+use std::io;
 
 fn guessing_game() {
     println!("Guess the number!");
@@ -18,7 +18,8 @@ fn guessing_game() {
 
         let mut guess = String::new();
 
-        io::stdin().read_line(&mut guess)
+        io::stdin()
+            .read_line(&mut guess)
             .expect("Failed to read line");
 
         let guess: u32 = match guess.trim().parse() {
@@ -80,13 +81,8 @@ fn control_flows() {
     }
 
     let condition = true;
-    let number = if condition {
-        5
-    } else {
-        6
-    };
+    let number = if condition { 5 } else { 6 };
     println!("The value of number is: {}", number);
-
 
     // Incompatible if and else expression types
     //
@@ -168,28 +164,28 @@ fn ownership() {
     // type with the Copy trait if the type, or any of its parts, has implemented the Drop trait. If
     // the type needs something special to happen when the value goes out of scope and we add the
     // Copy annotation to that type, we’ll get a compile-time error.
-    let s = String::from("hello");  // s comes into scope
+    let s = String::from("hello"); // s comes into scope
 
-    takes_ownership(s);             // s's value moves into the function...
-    // ... and so is no longer valid here
+    takes_ownership(s); // s's value moves into the function...
+                        // ... and so is no longer valid here
 
-    let x = 5;                      // x comes into scope
+    let x = 5; // x comes into scope
 
-    makes_copy(x);                  // x would move into the function,
-    // but i32 is Copy, so it’s okay to still
-    // use x afterward
+    makes_copy(x); // x would move into the function,
+                   // but i32 is Copy, so it’s okay to still
+                   // use x afterward
 
     //Causes: error[E0382]: borrow of moved value: `s`
     //println!("{}",s);
 
-    let s1 = gives_ownership();         // gives_ownership moves its return value into s1
+    let s1 = gives_ownership(); // gives_ownership moves its return value into s1
     println!("Giives Ownership : {}", s1);
 
-    let s2 = String::from("hello");     // s2 comes into scope
+    let s2 = String::from("hello"); // s2 comes into scope
 
-    let s3 = takes_and_gives_back(s2);  // s2 is moved into
-    // takes_and_gives_back, which also
-    // moves its return value into s3
+    let s3 = takes_and_gives_back(s2); // s2 is moved into
+                                       // takes_and_gives_back, which also
+                                       // moves its return value into s3
     println!("Takes and gives back ownership: {}", s3);
 
     let s1 = String::from("hello");
@@ -213,7 +209,6 @@ fn ownership() {
     //    let r2 = &mut s;
     //
     //    println!("{}, {}", r1, r2);
-
 
     // As always, we can use curly brackets to create a new scope, allowing for multiple mutable
     // references, just not simultaneous ones:
@@ -274,30 +269,34 @@ fn calculate_length(s: String) -> (String, usize) {
     (s, length)
 }
 
-fn gives_ownership() -> String {             // gives_ownership will move its
+fn gives_ownership() -> String {
+    // gives_ownership will move its
     // return value into the function
     // that calls it
 
     let some_string = String::from("hello"); // some_string comes into scope
 
-    some_string                              // some_string is returned and
-    // moves out to the calling
-    // function
+    some_string // some_string is returned and
+                // moves out to the calling
+                // function
 }
 
 // takes_and_gives_back will take a String and return one
-fn takes_and_gives_back(a_string: String) -> String { // a_string comes into
+fn takes_and_gives_back(a_string: String) -> String {
+    // a_string comes into
     // scope
 
-    a_string  // a_string is returned and moves out to the calling function
+    a_string // a_string is returned and moves out to the calling function
 }
 
-fn takes_ownership(some_string: String) { // some_string comes into scope
+fn takes_ownership(some_string: String) {
+    // some_string comes into scope
     println!("{}", some_string);
 } // Here, some_string goes out of scope and `drop` is called. The backing
-// memory is freed.
+  // memory is freed.
 
-fn makes_copy(some_integer: i32) { // some_integer comes into scope
+fn makes_copy(some_integer: i32) {
+    // some_integer comes into scope
     println!("{}", some_integer);
 }
 
@@ -385,7 +384,10 @@ impl Rectangle {
 
     // Associated Function
     fn square(size: u32) -> Rectangle {
-        Rectangle { width: size, height: size }
+        Rectangle {
+            width: size,
+            height: size,
+        }
     }
 }
 // The println! macro can do many kinds of formatting, and by default, the curly brackets tell
@@ -441,19 +443,30 @@ fn structures() {
     println!("{:?}", origin);
     println!("{}", origin.0);
 
-    let rect1 = Rectangle { width: 30, height: 50 };
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
     let ar = area(&rect1);
     println!(
-        "The area of the rectangle {:#?} is {} square pixels.", rect1, ar
+        "The area of the rectangle {:#?} is {} square pixels.",
+        rect1, ar
     );
 
-    println!(
-        "Calculated Area: {}", rect1.calculateArea()
-    );
+    println!("Calculated Area: {}", rect1.calculateArea());
 
-    let rect1 = Rectangle { width: 30, height: 50 };
-    let rect2 = Rectangle { width: 10, height: 40 };
-    let rect3 = Rectangle { width: 60, height: 45 };
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+    let rect2 = Rectangle {
+        width: 10,
+        height: 40,
+    };
+    let rect3 = Rectangle {
+        width: 60,
+        height: 45,
+    };
 
     println!("Can rect1 hold rect2? {}", rect1.can_hold(&rect2));
     println!("Can rect1 hold rect3? {}", rect1.can_hold(&rect3));
@@ -467,7 +480,7 @@ enum Message {
     //Struct
     Write(String),
     //String
-    ChangeColor(i32, i32, i32),    //Tuple
+    ChangeColor(i32, i32, i32), //Tuple
 }
 
 impl Message {
@@ -521,12 +534,11 @@ fn enums() {
     println!("{}", Coin::Nickel.value_in_cents());
     println!("{}", Coin::Quarter(UsState::California).value_in_cents());
 
-
     fn plus_one(x: Option<i32>) -> Option<i32> {
         match x {
             None => None,
             Some(i) => Some(i + 1),
-            _ => None
+            _ => None,
         }
     }
 
@@ -542,7 +554,13 @@ fn enums() {
 
     let coin = Coin::Quarter(UsState::Alabama);
 
-    let coins = [Coin::Quarter(UsState::Alabama), Coin::Quarter(UsState::Alaska), Coin::Dime, Coin::Nickel, Coin::Penny];
+    let coins = [
+        Coin::Quarter(UsState::Alabama),
+        Coin::Quarter(UsState::Alaska),
+        Coin::Dime,
+        Coin::Nickel,
+        Coin::Penny,
+    ];
 
     let mut count = 0;
 
@@ -567,4 +585,5 @@ fn main() {
     object_oriented_main();
     pattern_matching_main();
     advanced_features_main();
+    webserver_main();
 }

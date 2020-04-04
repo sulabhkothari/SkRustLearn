@@ -14,7 +14,7 @@ pub fn object_oriented_main() {
                 options: vec![
                     String::from("Yes"),
                     String::from("Maybe"),
-                    String::from("No")
+                    String::from("No"),
                 ],
             }),
             Box::new(Button {
@@ -37,7 +37,6 @@ pub fn object_oriented_main() {
 
     post.approve();
     assert_eq!("I ate a salad for lunch today", post.content());
-
 
     let mut typedPost = TypedPost::new();
 
@@ -152,8 +151,6 @@ impl U for Ss {
     }
 }
 
-
-
 pub struct Post {
     // To consume the old state, the request_review method needs to take ownership of the state value.
     // This is where the Option in the state field of Post comes in: we call the take method to take
@@ -200,7 +197,6 @@ impl Post {
         }
     }
 }
-
 
 trait State {
     // Note that rather than having self, &self, or &mut self as the first parameter of the method,
@@ -253,7 +249,6 @@ impl State for Published {
         &post.content
     }
 }
-
 
 pub struct TypedPost {
     content: String,

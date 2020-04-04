@@ -18,7 +18,7 @@
 //    3. Are allowed to be null
 //    4. Don’t implement any automatic cleanup
 
-pub fn advanced_features_main(){
+pub fn advanced_features_main() {
     println!("########################Raw Pointers############################");
 
     let mut num = 5;
@@ -94,8 +94,10 @@ fn split_at_mut2(slice: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
         // trust that this pointer is valid.
         // The offset method on raw pointers is also unsafe, because it must trust that the offset
         // location is also a valid pointer.
-        (slice::from_raw_parts_mut(ptr, mid),
-         slice::from_raw_parts_mut(ptr.offset(mid as isize), len - mid))
+        (
+            slice::from_raw_parts_mut(ptr, mid),
+            slice::from_raw_parts_mut(ptr.offset(mid as isize), len - mid),
+        )
     }
 }
 
@@ -105,9 +107,7 @@ fn likely_crash() {
     let address = 0x01234usize;
     let r = address as *mut i32;
 
-    let slice: &[i32] = unsafe {
-        slice::from_raw_parts_mut(r, 100000)
-    };
+    let slice: &[i32] = unsafe { slice::from_raw_parts_mut(r, 100000) };
 
     // [1]    99298 segmentation fault
     for s in slice {
@@ -128,7 +128,6 @@ fn likely_crash() {
 extern "C" {
     fn abs(input: i32) -> i32;
 }
-
 
 // Calling Rust Functions from Other Languages:
 // Rust function to be nameable by other languages, we must disable the Rust compiler’s name mangling.
@@ -225,7 +224,6 @@ impl Add<Meters> for Millimeters {
 //    1. To extend a type without breaking existing code
 //    2. To allow customization in specific cases most users won’t need
 
-
 // Fully Qualified Syntax for Disambiguation: Calling Methods with the Same Name:
 trait Pilot {
     fn fly(&self);
@@ -274,7 +272,6 @@ impl Animal for Dog {
     }
 }
 
-
 // Using Supertraits to Require One Trait’s Functionality Within Another Trait:
 use std::fmt;
 
@@ -298,7 +295,6 @@ impl fmt::Display for Point {
         write!(f, "({}, {})", self.x, self.y)
     }
 }
-
 
 // Using the Newtype Pattern to Implement External Traits on External Types:
 // (Newtype is a term that originates from the Haskell programming language.)
@@ -378,11 +374,12 @@ type Result<T> = std::result::Result<T, std::io::Error>;
 // we switched the type of the t parameter from T to &T. Because the type might not be Sized, we need
 // to use it behind some kind of pointer.
 
-
 fn advanced_traits() {
     println!("############################################Advanced Traits & Types########################################");
-    assert_eq!(Point { x: 1, y: 0 } + Point { x: 2, y: 3 },
-               Point { x: 3, y: 3 });
+    assert_eq!(
+        Point { x: 1, y: 0 } + Point { x: 2, y: 3 },
+        Point { x: 3, y: 3 }
+    );
 
     let person = Human;
     Pilot::fly(&person);
@@ -396,9 +393,12 @@ fn advanced_traits() {
     // println!("A baby dog is called a {}", Animal::baby_name());
 
     // <Type as Trait>::function(receiver_if_method, next_arg, ...);
-    println!("[fully qualified syntax] A baby dog is called a {}", <Dog as Animal>::baby_name());
+    println!(
+        "[fully qualified syntax] A baby dog is called a {}",
+        <Dog as Animal>::baby_name()
+    );
 
-    let p = Point{x:14, y:809};
+    let p = Point { x: 14, y: 809 };
     p.outline_print();
 
     let w = Wrapper(vec![String::from("hello"), String::from("world")]);
@@ -435,7 +435,7 @@ fn do_twice(f: fn(i32) -> i32, arg: i32) -> i32 {
 //    Box::new(|x| x + 1)
 // }
 
-fn advanced_functions_and_closures(){
+fn advanced_functions_and_closures() {
     println!("############################################Advanced functions and closures########################################");
 
     let answer = do_twice(add_one, 5);
@@ -443,14 +443,8 @@ fn advanced_functions_and_closures(){
     println!("The answer is: {}", answer);
 
     let list_of_numbers = vec![1, 2, 3];
-    let list_of_strings: Vec<String> = list_of_numbers
-        .iter()
-        .map(ToString::to_string)
-        .collect();
-    let list_of_strings: Vec<String> = list_of_numbers
-        .iter()
-        .map(|i| i.to_string())
-        .collect();
+    let list_of_strings: Vec<String> = list_of_numbers.iter().map(ToString::to_string).collect();
+    let list_of_strings: Vec<String> = list_of_numbers.iter().map(|i| i.to_string()).collect();
 
     // These types use () as initializer syntax
     // We can use these initializer functions as function pointers that implement the closure traits,
@@ -458,11 +452,8 @@ fn advanced_functions_and_closures(){
     enum Status {
         Value(u32),
         Stop,
-        Quit{a:i32}
+        Quit { a: i32 },
     }
 
-    let list_of_statuses: Vec<Status> =
-        (0u32..20)
-            .map(Status::Value)
-            .collect();
+    let list_of_statuses: Vec<Status> = (0u32..20).map(Status::Value).collect();
 }

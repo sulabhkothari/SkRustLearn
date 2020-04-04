@@ -18,8 +18,12 @@ fn loan(spd: CustomSmartPointer) {
 }
 
 pub fn smart_pointers_main() {
-    let c = CustomSmartPointer { data: String::from("my stuff") };
-    let d = CustomSmartPointer { data: String::from("other stuff") };
+    let c = CustomSmartPointer {
+        data: String::from("my stuff"),
+    };
+    let d = CustomSmartPointer {
+        data: String::from("other stuff"),
+    };
     println!("CustomSmartPointers created.");
     // Normally d would be dropped before c, because drop follows reverse order from construction.
 
@@ -54,7 +58,10 @@ pub fn smart_pointers_main() {
     // again to turn the &String into &str, which matches the hello function’s definition.
     hello(&m);
 
-    let a = Rc::new(Cons(Rc::new(RefCell::new(5)), Rc::new(Cons(Rc::new(RefCell::new(10)), Rc::new(Nil)))));
+    let a = Rc::new(Cons(
+        Rc::new(RefCell::new(5)),
+        Rc::new(Cons(Rc::new(RefCell::new(10)), Rc::new(Nil))),
+    ));
     println!("count after creating a = {}", Rc::strong_count(&a));
     let b = Cons(Rc::new(RefCell::new(3)), Rc::clone(&a));
     println!("count after creating b = {}", Rc::strong_count(&a));
@@ -65,7 +72,6 @@ pub fn smart_pointers_main() {
     println!("count after c goes out of scope = {}", Rc::strong_count(&a));
 
     // multiple mutable borrows to the same place can cause data races and inconsistencies
-
 
     // We create a value that is an instance of Rc<RefCell<i32>> and store it in a variable named
     // value so we can access it directly later.
@@ -108,11 +114,10 @@ impl<T> MyBox<T> {
     }
 }
 
+use crate::smart_pointers::MemoryLeakingList::{MemoryLeakingCons, MemoryLeakingNil};
+use std::cell::RefCell;
 use std::ops::Deref;
 use std::rc::{Rc, Weak};
-use std::cell::RefCell;
-use crate::smart_pointers::MemoryLeakingList::{MemoryLeakingCons, MemoryLeakingNil};
-
 
 impl<T> Deref for MyBox<T> {
     type Target = T;
@@ -196,7 +201,7 @@ impl LL {
 
         match self {
             Node(x, y) => println!(""),
-            Nil => println!("")
+            Nil => println!(""),
         }
     }
 }
@@ -219,7 +224,10 @@ impl MemoryLeakingList {
 
 fn memory_leaking() {
     println!("=================================================================================================");
-    let a = Rc::new(MemoryLeakingCons(5, RefCell::new(Rc::new(MemoryLeakingNil))));
+    let a = Rc::new(MemoryLeakingCons(
+        5,
+        RefCell::new(Rc::new(MemoryLeakingNil)),
+    ));
 
     println!("a initial rc count = {}", Rc::strong_count(&a));
     println!("a next item = {:?}", a.tail());
@@ -313,11 +321,17 @@ fn tree_run() {
 
     println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
 
-    println!("strongcount={}, weakcount={}", Rc::strong_count(&leaf), Rc::weak_count(&branch))
+    println!(
+        "strongcount={}, weakcount={}",
+        Rc::strong_count(&leaf),
+        Rc::weak_count(&branch)
+    )
 }
 
 fn visualize_changes_to_strong_weak_count() {
-    println!("#########################################################################################");
+    println!(
+        "#########################################################################################"
+    );
 
     let leaf = Rc::new(Node {
         value: 3,

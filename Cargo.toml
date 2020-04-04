@@ -16,4 +16,3 @@ path = "src/bin.rs"
 
 [dependencies]
 rand = "0.3.0"
-hello_macro = { path = "./hello_macro/hello_macro" }

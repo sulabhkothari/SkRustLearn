@@ -1,8 +1,8 @@
-use std::thread;
-use std::time::Duration;
-use std::sync::mpsc;
 use std::borrow::BorrowMut;
 use std::rc::Rc;
+use std::sync::mpsc;
+use std::thread;
+use std::time::Duration;
 
 pub fn concurrent_main() {
     let handle = thread::spawn(|| {
@@ -124,7 +124,7 @@ fn send_multiple_msg_over_channel() {
 fn shared_state_concurrency() {
     println!("#############################################");
 
-    use std::sync::{Mutex,Arc};
+    use std::sync::{Arc, Mutex};
     let m = Mutex::new(5);
 
     {
@@ -159,7 +159,6 @@ fn shared_state_concurrency() {
     // for each other forever.
     let counter = Arc::new(Mutex::new(0));
     let mut handles = vec![];
-
 
     for _ in 0..10 {
         let counter = Arc::clone(&counter);

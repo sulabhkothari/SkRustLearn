@@ -32,7 +32,6 @@ pub fn pattern_matching_main() {
         println!("{}", top);
     }
 
-
     let v = vec!['a', 'b', 'c'];
 
     for (index, value) in v.iter().enumerate() {
@@ -54,7 +53,7 @@ pub fn pattern_matching_main() {
     destructuring();
     destructuring_enums();
 
-    let ((feet, inches), Point {x, y}) = ((3, 10), Point { x: 3, y: -10 });
+    let ((feet, inches), Point { x, y }) = ((3, 10), Point { x: 3, y: -10 });
 
     foo(3, 4);
     ignoring_values_in_a_pattern();
@@ -85,7 +84,6 @@ fn matching_literals(x: i32) {
         _ => println!("anything"),
     }
 }
-
 
 fn matching_named_variables() {
     // Because match starts a new scope, variables declared as part of a pattern inside the match expression
@@ -130,13 +128,12 @@ fn matching_ranges() {
     }
 }
 
-
 struct Point {
     x: i32,
     y: i32,
 }
 
-fn destructuring(){
+fn destructuring() {
     let p = Point { x: 0, y: 7 };
 
     let Point { x: a, y: b } = p;
@@ -162,7 +159,7 @@ fn destructuring(){
     }
 }
 
-fn destructuring_enums(){
+fn destructuring_enums() {
     enum Color {
         Rgb(i32, i32, i32),
         Hsv(i32, i32, i32),
@@ -173,47 +170,27 @@ fn destructuring_enums(){
         Move { x: i32, y: i32 },
         Write(String),
         ChangeColor(i32, i32, i32),
-        NestedColor(Color)
+        NestedColor(Color),
     }
     let msg = Message::ChangeColor(0, 160, 255);
     let msg = Message::NestedColor(Color::Hsv(0, 160, 255));
 
     match msg {
-        Message::Quit => {
-            println!("The Quit variant has no data to destructure.")
-        }
+        Message::Quit => println!("The Quit variant has no data to destructure."),
         Message::Move { x, y } => {
-            println!(
-                "Move in the x direction {} and in the y direction {}",
-                x,
-                y
-            );
+            println!("Move in the x direction {} and in the y direction {}", x, y);
         }
         Message::Write(text) => println!("Text message: {}", text),
         Message::ChangeColor(r, g, b) => {
-            println!(
-                "Change the color to red {}, green {}, and blue {}",
-                r,
-                g,
-                b
-            )
+            println!("Change the color to red {}, green {}, and blue {}", r, g, b)
         }
         Message::NestedColor(Color::Rgb(r, g, b)) => {
-            println!(
-                "Change the color to red {}, green {}, and blue {}",
-                r,
-                g,
-                b
-            )
+            println!("Change the color to red {}, green {}, and blue {}", r, g, b)
         }
-        Message::NestedColor(Color::Hsv(h, s, v)) => {
-            println!(
-                "Change the color to hue {}, saturation {}, and value {}",
-                h,
-                s,
-                v
-            )
-        }
+        Message::NestedColor(Color::Hsv(h, s, v)) => println!(
+            "Change the color to hue {}, saturation {}, and value {}",
+            h, s, v
+        ),
     }
 }
 
@@ -228,7 +205,7 @@ fn foo(_: i32, y: i32) {
     println!("This code only uses the y parameter: {}", y);
 }
 
-fn ignoring_values_in_a_pattern(){
+fn ignoring_values_in_a_pattern() {
     let mut setting_value = Some(5);
     let new_setting_value = Some(10);
 
@@ -246,9 +223,7 @@ fn ignoring_values_in_a_pattern(){
     let numbers = (2, 4, 8, 16, 32);
 
     match numbers {
-        (first, _, third, _, fifth) => {
-            println!("Some numbers: {}, {}, {}", first, third, fifth)
-        },
+        (first, _, third, _, fifth) => println!("Some numbers: {}, {}, {}", first, third, fifth),
     }
     let _x = 5;
     let y = 10;
@@ -277,7 +252,7 @@ fn ignoring_values_in_a_pattern(){
         Point { x, .. } => println!("x is {}", x),
     }
 
-    let Point{x: a, ..} = Point { x: 0, y: 0, z: 0 };
+    let Point { x: a, .. } = Point { x: 0, y: 0, z: 0 };
     println!("a is {}", a);
 
     let numbers = (2, 4, 8, 16, 32);
@@ -285,12 +260,11 @@ fn ignoring_values_in_a_pattern(){
     match numbers {
         (first, .., last) => {
             println!("Some numbers: {}, {}", first, last);
-        },
+        }
     }
 }
 
-fn match_guards(){
-
+fn match_guards() {
     let num = Some(4);
 
     match num {
@@ -324,7 +298,7 @@ fn match_guards(){
     }
 }
 
-fn bindings(){
+fn bindings() {
     enum Message {
         Hello { id: i32 },
     }
@@ -333,15 +307,10 @@ fn bindings(){
 
     // Using @ lets us test a value and save it in a variable within one pattern.
     match msg {
-        Message::Hello { id: id_variable @ 3..=7 } => {
-            println!("Found an id in range: {}", id_variable)
-        },
-        Message::Hello { id: 10..=12 } => {
-            println!("Found an id in another range")
-        },
-        Message::Hello { id } => {
-            println!("Found some other id: {}", id)
-        },
+        Message::Hello {
+            id: id_variable @ 3..=7,
+        } => println!("Found an id in range: {}", id_variable),
+        Message::Hello { id: 10..=12 } => println!("Found an id in another range"),
+        Message::Hello { id } => println!("Found some other id: {}", id),
     }
-
 }
